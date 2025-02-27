@@ -47,7 +47,7 @@ app.get("/get/:key", (req, res) => {
         return res.json({ message: "Key not found!" ,valid:false});
     }
 
-    res.json({ key, value });
+    res.json({ key, value ,valid:true});
 });
 
 
