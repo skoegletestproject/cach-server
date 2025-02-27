@@ -44,7 +44,7 @@ app.get("/get/:key", (req, res) => {
     const value = cache.get(key);
     
     if (value === undefined) {
-        return res.status(404).json({ message: "Key not found!" });
+        return res.status(404).json({ message: "Key not found!" ,valid:false});
     }
 
     res.json({ key, value });
