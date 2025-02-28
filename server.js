@@ -39,23 +39,30 @@ app.post("/delete", (req, res) => {
     cache.del(req.body.key);
     res.sendStatus(200);
 });
+
 app.get("/get/:key", (req, res) => {
     const { key } = req.params;
     const value = cache.get(key);
     
     if (value === undefined) {
-        return res.json({ message: "Key not found!" ,valid:false});
+        return res.json({ message: "Key not found!", valid: false });
     }
 
-    res.json({ key, value ,valid:true});
+    res.json({ key, value, valid: true });
 });
-
 
 // API to clear all cache
 app.post("/clear", (req, res) => {
     cache.flushAll();
     res.sendStatus(200);
 });
+
+// Automatically clear cache every 10 days
+const TEN_DAYS_IN_MS = 10 * 24 * 60 * 60 * 1000;
+setInterval(() => {
+    console.log("🧹 Clearing cache automatically...");
+    cache.flushAll();
+}, TEN_DAYS_IN_MS);
 
 const PORT = 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
